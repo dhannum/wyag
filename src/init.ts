@@ -1,4 +1,5 @@
 import { GitRepository } from './repository.js'
+import path from 'node:path'
 
 export const commandInit = (args: Array<string>) => {
     // if (mainOptions.command === 'merge') {
@@ -11,6 +12,9 @@ export const commandInit = (args: Array<string>) => {
     //     console.log('\nmergeOptions\n============')
     //     console.log(mergeOptions)
     // }
-    console.log(args)
-    new GitRepository(process.cwd(), true)
+
+    const root = args[0] || '.'
+
+    const repo = new GitRepository(path.join(process.cwd(), root), true)
+    repo.create()
 }
