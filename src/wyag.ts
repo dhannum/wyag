@@ -1,5 +1,7 @@
 import commandLineArgs from 'command-line-args'
-import { commandInit } from './init.js'
+import { commandInit } from './command/init.js'
+import { commandCatFile } from './command/catFile.js'
+import { commandHashObject } from './command/hashObject.js'
 
 const mainDefinitions = [{ name: 'command', defaultOption: true }]
 const mainOptions = commandLineArgs(mainDefinitions, { stopAtFirstUnknown: true })
@@ -9,9 +11,9 @@ switch (mainOptions.command) {
     // case 'add':
     //     commandAdd(argv)
     //     break
-    // case 'cat-file':
-    //     commandCatFile(argv)
-    //     break
+    case 'cat-file':
+        commandCatFile(argv)
+        break
     // case 'check-ignore':
     //     commandCheckIgnore(argv)
     //     break
@@ -21,9 +23,9 @@ switch (mainOptions.command) {
     // case 'commit':
     //     commandCommit(argv)
     //     break
-    // case 'hash-object':
-    //     commandHashObject(argv)
-    //     break
+    case 'hash-object':
+        commandHashObject(argv)
+        break
     case 'init':
         commandInit(argv)
         break
