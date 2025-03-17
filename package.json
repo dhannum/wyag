@@ -4,7 +4,11 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "type": "module",
   "dependencies": {
@@ -16,13 +20,16 @@
   "devDependencies": {
     "@eslint/js": "^9.16.0",
     "@types/command-line-args": "^5.2.3",
+    "@vitest/coverage-istanbul": "^3.0.8",
+    "@vitest/ui": "^3.0.8",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.13.0",
     "prettier": "3.4.2",
     "typescript": "^5.5.3",
-    "typescript-eslint": "^8.18.0"
+    "typescript-eslint": "^8.18.0",
+    "vitest": "^3.0.8"
   },
   "private": true
 }
