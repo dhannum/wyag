@@ -6,6 +6,7 @@ export default defineConfig({
             provider: 'istanbul',
             reporter: ['text', 'json', 'html'],
             include: ['src/**'],
+            exclude: ['src/wyag.ts'],
         },
     },
 })
