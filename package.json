@@ -5,10 +5,10 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui"
+    "test": "npm run build && vitest run",
+    "test:watch": "npm run build && vitest",
+    "test:coverage": "npm run build && vitest run --coverage",
+    "test:ui": "npm run build && vitest --ui"
   },
   "type": "module",
   "dependencies": {

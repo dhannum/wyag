@@ -1,19 +1,19 @@
-import { beforeEach, afterEach, expect, test, vi } from 'vitest'
+import { beforeEach, expect, test, vi } from 'vitest'
 import { commandInit } from '../../src/command/init.js'
 import { GitRepository } from '../../src/repository.js'
 
-const mockCreate = vi.fn()
+const mockRepository = {
+    create: vi.fn(),
+}
 
 beforeEach(() => {
-    vi.mock('../../src/repository.js')
+    vi.clearAllMocks()
 
-    GitRepository.mockImplementation(function () {
-        this.create = mockCreate
+    vi.mock('../../src/repository.js', () => {
+        return {
+            GitRepository: vi.fn().mockImplementation(() => mockRepository),
+        }
     })
-})
-
-afterEach(() => {
-    vi.restoreAllMocks()
 })
 
 test('init works in current dir', () => {
@@ -24,7 +24,7 @@ test('init works in current dir', () => {
 
     expect(GitRepository).toHaveBeenCalledTimes(1)
     expect(GitRepository).toHaveBeenCalledWith(`${mockCwd}`, true)
-    expect(mockCreate).toHaveBeenCalledTimes(1)
+    expect(mockRepository.create).toHaveBeenCalledTimes(1)
 })
 
 test('init works in provided dir', () => {
@@ -35,5 +35,5 @@ test('init works in provided dir', () => {
 
     expect(GitRepository).toHaveBeenCalledTimes(1)
     expect(GitRepository).toHaveBeenCalledWith(`${mockCwd}/work`, true)
-    expect(mockCreate).toHaveBeenCalledTimes(1)
+    expect(mockRepository.create).toHaveBeenCalledTimes(1)
 })
