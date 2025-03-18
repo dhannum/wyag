@@ -9,14 +9,9 @@ export abstract class GitObject {
         }
     }
 
-    serialize = (): string => {
-        throw Error('not implemented')
-    }
+    abstract serialize(): string
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    deserialize = (dataIn: string): void => {
-        throw Error('not implemented')
-    }
+    abstract deserialize(dataIn: string): void
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     init = (): any => {}
