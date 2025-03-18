@@ -8,7 +8,7 @@ import { objectWrite } from '../object/utils.js'
 export const commandHashObject = (args: Array<string>) => {
     const commandDefinition = [
         { name: 'type', alias: 't' },
-        { name: 'write', alias: 'w', type: Boolean },
+        { name: 'write', alias: 'w', type: Boolean, defaultValue: false },
         { name: 'path', defaultOption: true },
     ]
     const commandOptions = commandLineArgs(commandDefinition, { argv: args })
@@ -36,7 +36,7 @@ export const commandHashObject = (args: Array<string>) => {
             obj = new GitBlob(objData)
             break
         default:
-            throw new Error(`Unknown command: ${commandOptions.type}`)
+            throw new Error(`Unknown type: ${commandOptions.type}`)
     }
 
     console.log(objectWrite(repo, obj))

@@ -55,6 +55,6 @@ export const cmd = (argv: string[]) => {
         //     commandTag(extraArgs)
         //     break
         default:
-            console.log('Bad command.')
+            throw Error(`Bad command ${mainOptions.command}`)
     }
 }

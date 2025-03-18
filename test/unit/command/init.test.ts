@@ -17,7 +17,7 @@ describe('init command', () => {
         })
     })
 
-    test('work in current dir', () => {
+    test('works in current dir', () => {
         const mockCwd = '/tmp/foo'
         vi.spyOn(process, 'cwd').mockReturnValue(mockCwd)
 
@@ -28,7 +28,7 @@ describe('init command', () => {
         expect(mockRepository.create).toHaveBeenCalledTimes(1)
     })
 
-    test('work in provided dir', () => {
+    test('works in provided dir', () => {
         const mockCwd = '/tmp/foo'
         vi.spyOn(process, 'cwd').mockReturnValue(mockCwd)
 
