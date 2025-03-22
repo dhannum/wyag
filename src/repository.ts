@@ -1,7 +1,6 @@
 import * as fs from 'fs'
 import path from 'node:path'
-import { readIniFileSync } from 'read-ini-file'
-import { writeIniFileSync } from 'write-ini-file'
+import { stringify, parse } from 'ini'
 
 interface GitConfig {
     core: {
@@ -12,9 +11,9 @@ interface GitConfig {
 }
 
 export class GitRepository {
-    workTree: string
-    gitDir: string
-    conf: GitConfig
+    public readonly workTree: string
+    public readonly gitDir: string
+    public readonly conf: GitConfig
 
     defaultConf: GitConfig = {
         core: {
@@ -29,12 +28,12 @@ export class GitRepository {
         this.gitDir = path.join(this.workTree, '.git')
 
         if (!force && !fs.existsSync(this.gitDir)) {
-            throw new Error(`Not a Git repository ${path}`)
+            throw new Error(`Not a Git repository ${rootPath}`)
         }
 
         const configFilePath = path.join(this.gitDir, 'config')
         if (fs.existsSync(configFilePath)) {
-            this.conf = readIniFileSync(configFilePath) as GitConfig
+            this.conf = parse(fs.readFileSync(configFilePath).toString()) as GitConfig
             if (Number.parseInt(this.conf.core.repositoryformatversion) !== 0) {
                 throw new Error(
                     `Unsupported repositoryformatversion: ${this.conf.core.repositoryformatversion}`,
@@ -49,7 +48,7 @@ export class GitRepository {
 
     create() {
         if (fs.existsSync(this.workTree) && fs.readdirSync(this.workTree).length > 0) {
-            throw new Error('Git directory not empty already exists')
+            throw new Error('Already a Git repository')
         }
 
         fs.mkdirSync(this.gitDir, { recursive: true })
@@ -64,7 +63,7 @@ export class GitRepository {
         )
         fs.writeFileSync(path.join(this.gitDir, 'HEAD'), 'ref: refs/heads/master\n')
 
-        writeIniFileSync(path.join(this.gitDir, 'config'), this.defaultConf)
+        fs.writeFileSync(path.join(this.gitDir, 'config'), stringify(this.defaultConf))
     }
 
     static repoFind(p: string): GitRepository | undefined {

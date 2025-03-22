@@ -12,10 +12,10 @@
   },
   "type": "module",
   "dependencies": {
+    "@types/ini": "^4.1.1",
     "@types/node": "^22.10.1",
     "command-line-args": "^6.0.1",
-    "read-ini-file": "^4.0.0",
-    "write-ini-file": "^4.0.1"
+    "ini": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.16.0",
@@ -26,6 +26,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.13.0",
+    "memfs": "^4.17.0",
     "prettier": "3.4.2",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.18.0",
