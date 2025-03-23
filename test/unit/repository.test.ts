@@ -1,13 +1,6 @@
 import { beforeEach, expect, test, vi, describe } from 'vitest'
-import * as fs from 'fs'
 import { vol } from 'memfs'
 import { GitRepository } from '../../src/repository.js'
-
-vi.mock('node:fs', async () => {
-    const memfs: { fs: typeof fs } = await vi.importActual('memfs')
-
-    return memfs.fs
-})
 
 describe('GitRepository', () => {
     beforeEach(() => {

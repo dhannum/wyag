@@ -8,5 +8,6 @@ export default defineConfig({
             include: ['src/**'],
             exclude: ['src/wyag.ts'],
         },
+        setupFiles: `test/unit/vitest.setup.ts`,
     },
 })
