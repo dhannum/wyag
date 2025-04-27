@@ -2,6 +2,7 @@ import commandLineArgs from 'command-line-args'
 import { commandInit } from './command/init.js'
 import { commandCatFile } from './command/catFile.js'
 import { commandHashObject } from './command/hashObject.js'
+import { commandLog } from './command/log.js'
 
 export const cmd = (argv: string[]) => {
     const mainDefinitions = [{ name: 'command', defaultOption: true }]
@@ -30,9 +31,9 @@ export const cmd = (argv: string[]) => {
         case 'init':
             commandInit(extraArgs)
             break
-        // case 'log':
-        //     commandLog(extraArgs)
-        //     break
+        case 'log':
+            commandLog(extraArgs)
+            break
         // case 'ls-files':
         //     commandLsFiles(extraArgs)
         //     break

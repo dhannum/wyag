@@ -4,7 +4,7 @@ import { GitRepository } from '../../src/repository.js'
 
 describe('GitRepository', () => {
     beforeEach(() => {
-        vi.clearAllMocks()
+        vi.resetAllMocks()
         vol.reset()
     })
 

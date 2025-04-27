@@ -5,6 +5,8 @@ import zlib from 'node:zlib'
 import { GitBlob } from './blob.js'
 import crypto from 'crypto'
 import type { GitObject } from './object.js'
+import { GitCommit } from './commit.js'
+import { TextEncoder } from 'node:util'
 
 export const objectRead = (repo: GitRepository, sha: string): GitObject | undefined => {
     const file = path.join(repo.gitDir, 'objects', sha.substring(0, 2), sha.substring(2))
@@ -27,13 +29,14 @@ export const objectRead = (repo: GitRepository, sha: string): GitObject | undefi
 
     const blob = unzipped.substring(zeroIndex + 1)
 
-    if (blob.length !== length)
+    if (new TextEncoder().encode(blob).length !== length)
         throw Error(
             `Malformed object at ${file}, header and blob lengths don't match ${length} != ${blob.length}`,
         )
 
     switch (type) {
         case 'commit':
+            return new GitCommit(blob)
         case 'tree':
         case 'tag':
         case 'blob':

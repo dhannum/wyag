@@ -19,7 +19,7 @@ const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
 describe('cat-file command', () => {
     beforeEach(() => {
-        vi.clearAllMocks()
+        vi.resetAllMocks()
     })
 
     test('happy path, provided sha and type', () => {

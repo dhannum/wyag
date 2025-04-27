@@ -21,7 +21,7 @@ const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {})
 
 describe('hash-object command', () => {
     beforeEach(() => {
-        vi.clearAllMocks()
+        vi.resetAllMocks()
     })
 
     test('happy path, hash and write', () => {

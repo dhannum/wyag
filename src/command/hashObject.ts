@@ -4,6 +4,7 @@ import { GitObject } from '../object/object.js'
 import * as fs from 'node:fs'
 import { GitBlob } from '../object/blob.js'
 import { objectWrite } from '../object/utils.js'
+import { GitCommit } from '../object/commit.js'
 
 export const commandHashObject = (args: Array<string>) => {
     const commandDefinition = [
@@ -24,7 +25,7 @@ export const commandHashObject = (args: Array<string>) => {
     let obj: GitObject
     switch (commandOptions.type) {
         case 'commit':
-            obj = new GitBlob(objData)
+            obj = new GitCommit(objData)
             break
         case 'tree':
             obj = new GitBlob(objData)

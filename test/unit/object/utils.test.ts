@@ -24,9 +24,9 @@ const expectedSha = 'e0695f14a412c29e252c998c81de1dde59658e4a'
 
 const expectedDataB64 = `eAFtkk9r4zAQxffsT/GW9JbaZlnYQ6DH0i6kpwbCYkwZyxNbVH+MJCfk2+/IdWgPPWpG+s17b9QZ3+HPr98/NtvD38P+cYdj0Ilx9XOIbE4gPOn0syhepaAYgScfdfLhipMPSCOjacaUprir68uVhiqNXWVS23zHaVtQSFoZroriKLeho0z4JLCrLvpdT9xrqnwY6nyq96IoUOK3KfghkLXaDW1j1irWqsAvoj2xg3ZfmIKxvucF1zZyKvOxbe9xGbUaYZlcXJxEsoz4YbT3arbsEhQ5dIw5co/k87B+liCy8+fDyx5nDlF7B39aaqs/UMQ0d0bHUd5J+9Pj15QkDydYYa0moFOOvQL++VnemSscC4EkeYreUSeVwCore7SkJL4V8GDpnR9unPsMdbui2Gw7HrR7i0FBtBhTAHcYtBgz3jHKUmiya31m3PYo3XHuKuVtLds0qc65cnn7EyWVcmPhqH7J/Nte1gOSgZstuz4LKP4DCa3aoQ==`
 
-describe('foo', () => {
+describe('object utils', () => {
     beforeEach(() => {
-        vi.clearAllMocks()
+        vi.resetAllMocks()
         vol.reset()
     })
 
@@ -100,5 +100,26 @@ describe('foo', () => {
         expect(() => objectRead(repo, 'e0badType')).toThrowError(
             /Malformed object at.*, invalid type.*/,
         )
+    })
+
+    test('read object with non-ascii characters from disk', () => {
+        const rawB64 = `eAF1jkFKQzEURR1nFW8uSJL3kpeAiDspSfrib+lvJE2LLsKROFM34djdSMFd+AedOrpwOAduafO8GWCRrkYXgRyqEHpTSqV1CctEqsRCmaOsbXRkrK8O1WPqsh+A6Ekc+ZCZMEstmZxnjtZGIdFC3rG1TCodx9Q6/H58nr/ezq8vP9/vcDttd6n353vj8aa0+Q6MC1YbZAxwrYPWaqHLvyEdLu5/UfCM/hKpunmCtIeWt1LGqsuh7U4CUzpMkI8P6g+2z003`
+
+        const rawText = `tree b8fe4361ccf4dc8ccf94f47e4b79ed2954126f53\nparent 3364e5468b743befcb456779229e4e0e46572274\nauthor 非法操作 <hjlarry@163.com> 1582013738 +0800\ncommitter hjlarry <hjlarry@163.com> 1582086736 +0800\n\nfix an object_resolve hash bug\n`
+        vol.fromJSON({}, '/somewhere')
+
+        const repo = new GitRepository('/somewhere', true)
+        repo.create()
+
+        vol.mkdirSync('/somewhere/.git/objects/e0')
+        vol.writeFileSync(
+            '/somewhere/.git/objects/e0/695f14a412c29e252c998c81de1dde59658e4a',
+            Buffer.from(rawB64, 'base64'),
+        )
+
+        const obj = objectRead(repo, expectedSha)
+
+        const serialized = obj!.serialize()
+        expect(serialized).toEqual(rawText)
     })
 })
